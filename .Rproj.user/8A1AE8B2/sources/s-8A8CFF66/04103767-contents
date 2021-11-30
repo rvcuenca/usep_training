@@ -1,0 +1,201 @@
+# (PART\*) One-Way ANOVA {-}
+
+# Data Entry
+
+Load the necessary packages.
+
+```{r message=TRUE, warning=FALSE}
+library(tidyverse)
+library(ggpubr)
+library(multcomp)
+```
+
+
+Load data to R using `read_csv()` function of the `readr` package of `tidyverse` and save it with a variable name `oneway_data`.
+
+
+```{r message=FALSE, warning=FALSE}
+# Load and save
+oneway_data <- read_csv(file = "data/Tubo-USEP_One-Way Cleaned Data for R.csv")
+# Preview
+oneway_data
+```
+
+
+# Data Manipulation
+
+```{r}
+oneway_data %>% 
+  gather(key = "Type", value = "Sales", -Observation) %>% 
+  # mutate(across(c(Observation,Type), ~as_factor(.x)))
+  mutate(across(Observation:Type, ~as_factor(.x))) -> clean_oneway_data
+clean_oneway_data
+```
+```{r}
+str(clean_oneway_data)
+clean_oneway_data %>% 
+  sample_n(10)
+```
+
+```{r}
+levels(clean_oneway_data$Type)
+```
+# Data Visualization
+
+```{r}
+clean_oneway_data %>% 
+  ggboxplot(x = "Type", y = 'Sales',
+            fill = "Type",
+            palette = c("white", "pink", "orange", "green")) + 
+  theme(legend.position = "none")
+```
+
+# Hypothesis Testing
+
+_The One-Way ANOVA Table in R_
+
+```{r}
+one_aov <- clean_oneway_data %>% 
+  aov(formula = Sales ~ Type, data = .)
+  
+one_aov %>% 
+  summary
+```
+
+In the table, 
+  
+  - `Df` -- degress of freedom
+  - `Sum Sq` -- sum of squares
+  - `Mean Sq` -- mean sum of squares
+  - `F value` -- value of \(F\) statistic
+  - `Pr(>F)` -- \(p\)-value
+
+Thus, from the table
+
+
+  \begin{align}
+    SSB &= 76.85 & MSB &= 25.615 & F = 10.49\\
+    SSE &= 39.08 & MSE &= 2.443  & \\
+  \end{align}
+
+Similar to when you look up at an F-table, the p-value can be computed using the following R code.
+
+```{r}
+pf(q = 10.49, df1 = 3, df2 = 16, lower.tail = F)
+```
+
+
+# Checking Assumptions^[Except for most of the codes, the contents of this section are obtained from this [link](https://yieldingresults.org/wp-content/uploads/2015/03/Checking_ANOVA_assumptions.html)]
+
+
+## Checking Normality Assumptions
+
+_Shapiro-Wilk Test_
+
+The Shapiro-Wilk test tests the null hypothesis that the samples come from a normal distribution against the alternative hypothesis that the samples do not come from a normal distribution. 
+
+```{r}
+oneway_data[-1,] %>% 
+  rstatix::shapiro_test(Colorless,Pink,Orange,Green)
+```
+
+```{r}
+shapiro.test(residuals(object = one_aov))
+```
+
+
+<!-- ```{r} -->
+<!-- clean_oneway_data %>% -->
+<!--   group_by(Type) %>% -->
+<!--   group_map(~ { -->
+<!--     ks.test(x = .x$Sales,y = pnorm(mean = mean(.x$Sales), sd = sd(.x$Sales),q = .x$Sales))  %>% -->
+<!--       unlist %>% -->
+<!--       bind_rows -->
+<!--   }) %>% -->
+<!--   bind_rows %>% -->
+<!--   mutate(data.name=levels(clean_oneway_data$Type)) -->
+<!-- ``` -->
+
+_QQ Plots_
+
+
+```{r}
+clean_oneway_data %>% 
+  mutate(Residual = one_aov$residuals) %>% 
+  ggplot(aes(sample = Residual)) + 
+  stat_qq() + 
+  stat_qq_line() + 
+  facet_wrap(~Type)
+```
+```{r}
+plot(one_aov,2)
+```
+
+_Histogram_
+
+```{r}
+clean_oneway_data %>% 
+  ggplot(aes(x = Sales)) + 
+  geom_histogram(bins = 30, color = "white") + 
+  geom_density() + 
+  facet_wrap(~Type)
+```
+
+## Checking Homogeneity of Variance Assumption
+
+_Bartlet's Test_
+
+Bartlett’s test tests the null hypothesis that the group variances are equal against the alternative hypothesis that the group variances are not equal.
+
+```{r}
+clean_oneway_data %>% 
+  bartlett.test(Sales ~ Type, data = .)
+```
+
+```{r}
+clean_oneway_data %>% 
+  ggboxplot(x = "Type", y = 'Sales',
+            fill = "Type",
+            palette = c("white", "pink", "orange", "green")) + 
+  theme(legend.position = "none")
+```
+The variability within each group is represented by the vertical size of each box; i.e., the interquartile range (IQR). The boxplot shows that the variability is roughly equal for each group. Let’s look at some more ways to test the homogeneity of variance assumption.
+
+_Residual vs. Fitted Values Plot_
+
+```{r}
+plot(one_aov,1, las=1)
+```
+This plot shows the residuals (errors) on the y-axis and the fitted values (predicted values) on the x-axis. If the variance of each group is equal, the plot should show no pattern; in other words, the points should look like a cloud of random points. The plot shows that the variances are approximately homogenous since the residuals are distributed approximately equally above and below zero.
+
+_Standardised Residuals vs Fitted values Plot_
+
+```{r}
+plot(one_aov,3)
+```
+
+The more coincident the red line plot to the horizontal line at 1, the lesser possibility the violation of the homogeneity of variance assumption.
+
+# Post-hoc
+
+## TukeyHSD (Tukey’s Honestly-Significant Difference) post-hoc test in R
+
+There are at least two ways to perform a Tukey's HSD post-hoc in R. One is by using the `TukeyHSD` function of the pre-installed R package `stats`. The second is the `glht` function with `"Tukey"` option bundled along with the  `multcomp` package.
+
+## Using `TukeyHSD` of `stats` package
+
+```{r}
+TukeyHSD(one_aov)
+```
+
+**_Discussion of Results_**. Picking up from the significant ANOVA result in our soft drink data, the Tukey's HSD post-hoc analysis result above shows the following significant comparisons at $0.05$:
+
+```{r}
+cat("Avg. Sales Comparison\t P-value (adjusted)\n---------------------------------------------\nGreen > Colorless\t 0.0034923\nGreen > Orange\t\t 0.0005837\nOrange > Pink\t\t 0.0281177\n---------------------------------------------\n")
+
+```
+## Using the `multicomp` package with "Tukey" option
+
+```{r}
+summary(glht(one_aov, linfct = mcp(Type = "Tukey")))
+```

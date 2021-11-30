@@ -1,0 +1,13 @@
+h1:part-one-way-anova (PART*) One-Way ANOVA
+h1:data-entry Data Entry
+h1:data-manipulation Data Manipulation
+h1:data-visualization Data Visualization
+h1:hypothesis-testing Hypothesis Testing
+h1:checking-assumptions Checking Assumptions
+h2:checking-normality-assumptions Checking Normality Assumptions
+h2:checking-homogeneity-of-variance-assumption Checking Homogeneity of Variance Assumption
+h1:post-hoc Post-hoc
+h2:tukeyhsd-tukeys-honestly-significant-difference-post-hoc-test-in-r TukeyHSD (Tukey’s Honestly-Significant Difference) post-hoc test in R
+h2:using-tukeyhsd-of-stats-package Using  of  package
+h2:using-the-multicomp-package-with-tukey-option Using the  package with  option
+

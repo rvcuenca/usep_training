@@ -1,0 +1,4 @@
+"0","clean_oneway_data %>% "
+"0","  ggplot(aes(x = Sales)) + "
+"0","  geom_histogram(bins = 30, color = ""white"") + "
+"0","  facet_wrap(~Type)"

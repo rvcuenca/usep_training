@@ -1,0 +1,5 @@
+"0","oneway_data %>% "
+"0","  gather(key = ""Type"", value = ""Sales"", -Observation) %>% "
+"0","  # mutate(across(c(Observation,Type), ~as_factor(.x)))"
+"0","  mutate(across(Observation:Type, ~as_factor(.x))) -> clean_oneway_data"
+"0","clean_oneway_data"

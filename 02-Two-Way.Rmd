@@ -1,0 +1,134 @@
+# (PART\*) Two-Way ANOVA {-}
+
+# Data Entry^[The contents of the succeeding sections are obtained from this [link](http://www.sthda.com/english/wiki/two-way-anova-test-in-r#compute-two-way-anova-test-in-r-for-unbalanced-designs)]
+
+Load data to R using `read_csv()` function of the `readr` package of `tidyverse` and save it with a variable name `twoway_data`.
+
+
+```{r message=FALSE, warning=FALSE}
+# Load and save
+twoway_data <- read_csv(file = "data/Tubo-USEP_Two-Way Cleaned Data for R.csv")
+# Preview
+twoway_data
+```
+
+
+# Data Manipulation
+
+```{r}
+twoway_data%>% 
+  gather(key = Plot, value = Yield, -c(Fertilizer,Manure)) %>% 
+  mutate(across(Fertilizer:Plot, ~ as.factor(.x))) -> clean_twoway_data
+```
+```{r}
+# Structure preview
+str(clean_twoway_data)
+```
+
+```{r}
+# Sample preview
+clean_twoway_data %>% 
+  sample_n(10)
+```
+
+# Data Visualization
+
+```{r}
+ggboxplot(clean_twoway_data,
+          x = "Fertilizer",
+          y = "Yield",
+          fill = "Manure")
+```
+
+# Hypothesis Testing
+
+## The Two-Way ANOVA Table with Main Effects Only
+
+```{r}
+two_aov <- clean_twoway_data %>% 
+  aov(formula = Yield ~ Fertilizer + Manure, data = .)
+  
+two_aov %>% 
+  summary
+```
+
+
+Similar to the One-Way ANOVA table, 
+  
+  - `Df` -- degress of freedom
+  - `Sum Sq` -- sum of squares
+  - `Mean Sq` -- mean sum of squares
+  - `F value` -- value of \(F\) statistic
+  - `Pr(>F)` -- \(p\)-value
+
+Thus, from the table
+
+  \begin{align}
+    SSR &= 17.67 & MSR &= 17.672 & F_C = 6.332\\
+    SSC &= 19.21 & MSC &= 19.208 & F_R = 6.883\\
+    SSE &= 47.44 & MSE &= 2.791  & \\
+  \end{align}
+
+Similar to when you look up at an F-table, the p-values can be computed using the following R code.
+
+```{r}
+pf(q = 6.332, df1 = 1, df2 = 17, lower.tail = F)
+pf(q = 6.883, df1 = 1, df2 = 17, lower.tail = F)
+```
+
+## The Two-Way ANOVA Table with Interactions
+
+```{r}
+two_aov2 <- clean_twoway_data %>% 
+  aov(formula = Yield ~ Fertilizer*Manure, data = .)
+  
+two_aov2 %>% 
+  summary
+```
+
+The interaction is not significant so we proceed on using the additive model (i.e., main-effects only).
+
+# Checking Assumptions
+
+
+## Checking Normality Assumptions
+
+_Shapiro-Wilk Test_
+
+The Shapiro-Wilk test tests the null hypothesis that the samples come from a normal distribution against the alternative hypothesis that the samples do not come from a normal distribution. 
+
+```{r}
+shapiro.test(residuals(two_aov))
+```
+_QQ Plots_
+
+```{r}
+plot(two_aov, 2)
+```
+
+## Checking Homogeneity of Variance Assumption
+
+```{r}
+par(mfrow=c(2,2))
+plot(two_aov)
+par(mfrow=c(1,1))
+```
+
+# Post-hoc
+We no longer need a posthoc analysis since we only have two levels in each of the significant factors. However, for the sake of illustration, we could be simply run the following code
+
+```{r}
+TukeyHSD(two_aov)
+```
+
+# Mean Line or Interaction Plots
+
+```{r}
+ggline(clean_twoway_data,
+       x = "Fertilizer",
+       y = "Yield",
+       color = "Manure",
+       add = c("mean_se"))
+```
+
+The above figure supports the result before that there is no significant interaction between the two factors.

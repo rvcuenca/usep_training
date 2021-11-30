@@ -1,0 +1,5 @@
+"0","clean_oneway_data %>% "
+"0","  ggboxplot(x = ""Type"", y = 'Sales',"
+"0","            fill = ""Type"","
+"0","            palette = c(""white"", ""pink"", ""orange"", ""green"")) + "
+"0","  theme(legend.position = ""none"")"
