@@ -114,12 +114,12 @@ plot(two_aov)
 par(mfrow=c(1,1))
 ```
 
-# Post-hoc
-We no longer need a posthoc analysis since we only have two levels in each of the significant factors. However, for the sake of illustration, we could be simply run the following code
+<!-- # Post-hoc -->
+<!-- We no longer need a posthoc analysis since we only have two levels in each of the significant factors. However, for the sake of illustration, we could be simply run the following code -->
 
-```{r}
-TukeyHSD(two_aov)
-```
+<!-- ```{r} -->
+<!-- TukeyHSD(two_aov) -->
+<!-- ``` -->
 
 # Mean Line or Interaction Plots
 

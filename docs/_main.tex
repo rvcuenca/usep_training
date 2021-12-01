@@ -338,16 +338,16 @@ Load data to R using \texttt{read\_csv()} function of the \texttt{readr} package
 ## # A tibble: 10 x 3
 ##    Observation Type      Sales
 ##    <fct>       <fct>     <dbl>
-##  1 5           Pink       29.6
-##  2 1           Orange     27.9
-##  3 1           Pink       31.2
-##  4 2           Orange     25.1
-##  5 2           Colorless  28.7
-##  6 4           Pink       27.9
+##  1 1           Green      30.8
+##  2 5           Green      32.8
+##  3 4           Pink       27.9
+##  4 5           Colorless  27.2
+##  5 1           Colorless  26.5
+##  6 1           Pink       31.2
 ##  7 4           Green      31.7
-##  8 2           Pink       28.3
-##  9 5           Green      32.8
-## 10 5           Orange     26.5
+##  8 4           Colorless  29.1
+##  9 5           Pink       29.6
+## 10 3           Orange     28.5
 \end{verbatim}
 
 \begin{Shaded}
@@ -892,32 +892,6 @@ The Shapiro-Wilk test tests the null hypothesis that the samples come from a nor
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{post-hoc-1}{%
-\chapter{Post-hoc}\label{post-hoc-1}}
-
-We no longer need a posthoc analysis since we only have two levels in each of the significant factors. However, for the sake of illustration, we could be simply run the following code
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{TukeyHSD}\NormalTok{(two\_aov)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   Tukey multiple comparisons of means
-##     95% family-wise confidence level
-## 
-## Fit: aov(formula = Yield ~ Fertilizer + Manure, data = .)
-## 
-## $Fertilizer
-##           diff       lwr        upr    p adj
-## Low-High -1.88 -3.456219 -0.3037812 0.022188
-## 
-## $Manure
-##           diff       lwr        upr     p adj
-## Low-High -1.96 -3.536219 -0.3837812 0.0177922
-\end{verbatim}
-
 \hypertarget{mean-line-or-interaction-plots}{%
 \chapter{Mean Line or Interaction Plots}\label{mean-line-or-interaction-plots}}
 
@@ -931,7 +905,7 @@ We no longer need a posthoc analysis since we only have two levels in each of th
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{_main_files/figure-latex/unnamed-chunk-35-1} \end{center}
+\begin{center}\includegraphics[width=0.8\linewidth]{_main_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 The above figure supports the result before that there is no significant interaction between the two factors.
 

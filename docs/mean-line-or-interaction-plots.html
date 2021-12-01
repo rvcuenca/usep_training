@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14 Mean Line or Interaction Plots | Day 4: One-Way and Two-Way ANOVA using R</title>
+  <title>13 Mean Line or Interaction Plots | Day 4: One-Way and Two-Way ANOVA using R</title>
   <meta name="description" content="This is the reference material for the Day 4 of USEP Webinar Series on Statistics with R Software." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14 Mean Line or Interaction Plots | Day 4: One-Way and Two-Way ANOVA using R" />
+  <meta property="og:title" content="13 Mean Line or Interaction Plots | Day 4: One-Way and Two-Way ANOVA using R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14 Mean Line or Interaction Plots | Day 4: One-Way and Two-Way ANOVA using R" />
+  <meta name="twitter:title" content="13 Mean Line or Interaction Plots | Day 4: One-Way and Two-Way ANOVA using R" />
   
   <meta name="twitter:description" content="This is the reference material for the Day 4 of USEP Webinar Series on Statistics with R Software." />
   
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="post-hoc-1.html"/>
+<link rel="prev" href="checking-assumptions-1.html"/>
 <link rel="next" href="references.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -173,8 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1" data-path="checking-assumptions-1.html"><a href="checking-assumptions-1.html#checking-normality-assumptions-1"><i class="fa fa-check"></i><b>12.1</b> Checking Normality Assumptions</a></li>
 <li class="chapter" data-level="12.2" data-path="checking-assumptions-1.html"><a href="checking-assumptions-1.html#checking-homogeneity-of-variance-assumption-1"><i class="fa fa-check"></i><b>12.2</b> Checking Homogeneity of Variance Assumption</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="post-hoc-1.html"><a href="post-hoc-1.html"><i class="fa fa-check"></i><b>13</b> Post-hoc</a></li>
-<li class="chapter" data-level="14" data-path="mean-line-or-interaction-plots.html"><a href="mean-line-or-interaction-plots.html"><i class="fa fa-check"></i><b>14</b> Mean Line or Interaction Plots</a></li>
+<li class="chapter" data-level="13" data-path="mean-line-or-interaction-plots.html"><a href="mean-line-or-interaction-plots.html"><i class="fa fa-check"></i><b>13</b> Mean Line or Interaction Plots</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -196,14 +195,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="mean-line-or-interaction-plots" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Mean Line or Interaction Plots</h1>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="mean-line-or-interaction-plots.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggline</span>(clean_twoway_data,</span>
-<span id="cb71-2"><a href="mean-line-or-interaction-plots.html#cb71-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Fertilizer&quot;</span>,</span>
-<span id="cb71-3"><a href="mean-line-or-interaction-plots.html#cb71-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Yield&quot;</span>,</span>
-<span id="cb71-4"><a href="mean-line-or-interaction-plots.html#cb71-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Manure&quot;</span>,</span>
-<span id="cb71-5"><a href="mean-line-or-interaction-plots.html#cb71-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">add =</span> <span class="fu">c</span>(<span class="st">&quot;mean_se&quot;</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div id="mean-line-or-interaction-plots" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Mean Line or Interaction Plots</h1>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="mean-line-or-interaction-plots.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggline</span>(clean_twoway_data,</span>
+<span id="cb69-2"><a href="mean-line-or-interaction-plots.html#cb69-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Fertilizer&quot;</span>,</span>
+<span id="cb69-3"><a href="mean-line-or-interaction-plots.html#cb69-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Yield&quot;</span>,</span>
+<span id="cb69-4"><a href="mean-line-or-interaction-plots.html#cb69-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Manure&quot;</span>,</span>
+<span id="cb69-5"><a href="mean-line-or-interaction-plots.html#cb69-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">add =</span> <span class="fu">c</span>(<span class="st">&quot;mean_se&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>The above figure supports the result before that there is no significant interaction between the two factors.</p>
 
 </div>
@@ -212,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="post-hoc-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="checking-assumptions-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

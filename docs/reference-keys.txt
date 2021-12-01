@@ -21,5 +21,4 @@ the-two-way-anova-table-with-interactions
 checking-assumptions-1
 checking-normality-assumptions-1
 checking-homogeneity-of-variance-assumption-1
-post-hoc-1
 mean-line-or-interaction-plots
